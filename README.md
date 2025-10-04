@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+📘 Markdown Preview App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with Create React App.
 
-## Available Scripts
+It’s a real-time Markdown Previewer where users can write Markdown on the left and see the rendered output on the right.
+
+📝 Project Description & Features
+
+Live Markdown editing with instant preview
+
+GitHub Flavored Markdown (GFM) support (tables, checklists, strikethrough, etc.)
+
+Syntax highlighting for code blocks
+
+Responsive design (works on desktop and mobile)
+
+Accessibility-first design: semantic HTML, ARIA roles, WCAG AA contrast compliance
+
+Error Boundaries to catch crashes in the previewer
+
+Optional API integrations (Markdown-to-PDF, cloud save, etc.)
+
+⚙️ Installation & Setup Instructions
+Prerequisites
+
+Node.js (>= 18 recommended)
+
+npm (>= 10) or yarn
+
+Steps
+# Clone the repository
+git clone https://github.com/techybella16/markdownpreview-app
+
+# Navigate into the project folder
+cd markdownpreview-app
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+
+The app will run locally on:
+👉 http://localhost:3000
+
+To build for production:
+
+npm run build
+
+📜 Available Scripts & Commands
 
 In the project directory, you can run:
 
-### `npm start`
+npm start → Runs app in development mode.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+npm test → Launches the test runner in watch mode.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+npm run build → Builds the app for production.
 
-### `npm test`
+npm run eject → Ejects CRA configuration (⚠️ irreversible).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+🛠 Technology Stack & Architecture Decisions
 
-### `npm run build`
+React 19 → Frontend framework
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Tailwind CSS + Flowbite → Styling and UI components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+React Markdown → Core Markdown rendering
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+remark-gfm → Enables GitHub Flavored Markdown features
 
-### `npm run eject`
+rehype-raw → Allows limited raw HTML parsing (with sanitization for safety)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+React-Toastify → Toast notifications
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+CodeMirror / Monaco Editor → Provides syntax highlighting in the Markdown editor
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Architecture Notes:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Chose react-markdown because it safely parses Markdown without exposing security vulnerabilities.
 
-## Learn More
+Added rehype-raw to support inline HTML while maintaining sanitization.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Error Boundaries ensure that unexpected Markdown doesn’t crash the app.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+🔌 API Documentation & Usage (Optional Integrations)
 
-### Code Splitting
+If enabled, APIs may provide:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Markdown-to-PDF API → Export rendered Markdown as a PDF
 
-### Analyzing the Bundle Size
+Cloud Storage API → Save & retrieve Markdown documents online
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Usage examples will go here once integrated.
 
-### Making a Progressive Web App
+📷 Screenshots / Demos
+Markdown Input	Preview Output
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+	
 
-### Advanced Configuration
+Optionally add a GIF or short demo video here (e.g., hosted on GitHub or YouTube).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+🚧 Known Issues / Limitations
 
-### Deployment
+Performance may degrade with very large Markdown files
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Some raw HTML may not render as expected due to sanitization
 
-### `npm run build` fails to minify
+Mobile keyboard experience could be further optimized
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+🔮 Future Improvements
+
+Export to PDF / Word / HTML
+
+Dark mode & theme switching
+
+Collaborative editing (via WebSockets)
+
+Offline-first support as a Progressive Web App (PWA)
+
+📚 CRA Reference Docs
+
+For more details on CRA internals:
+
+Code Splitting
+
+Analyzing Bundle Size
+
+Making a PWA
+
+Deployment
+
+Troubleshooting build errors
+
+👩‍💻 Author
+
+Developed by Your Name.
+
+Portfolio
+
+
+📜 License
+
+This project is licensed under the MIT License
+.

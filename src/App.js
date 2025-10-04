@@ -1,16 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import Dashboard from './pages/dashboard';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+import Dashboard from "./pages/Dashboard";
+import ErrorBoundary from "./pages/ErrorBoundary";
+import ErrorTest from "./pages/ErrorTest";
+import NotFound from "./pages/NotFound";
+
+export default function App() {
   return (
-      <div className="App">
+    <ErrorBoundary>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/error-test" element={<ErrorTest />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+      <ToastContainer position="top-right" autoClose={2000} />
+    </ErrorBoundary>
   );
 }
-
-export default App;
