@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -7,6 +7,7 @@ import { markdown } from "@codemirror/lang-markdown";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function Dashboard() {
   const [text, setText] = useState(`# Welcome to the Markdown Editor!
@@ -17,26 +18,14 @@ This is a **live preview** of your Markdown.
 - See preview on the right
 - Mobile friendly ✨
 `);
+const [saveFile, setSaveFile] = useState("Save File");
 
   const fileInputRef = useRef(null);
 
-  // Load from file
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file && file.name.endsWith(".md")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setText(e.target.result);
-        toast.success(`Loaded file: ${file.name}`);
-      };
-      reader.readAsText(file);
-    } else {
-      toast.error("Please upload a valid .md file");
-    }
-  };
+
 
   // Save to file
-  const handleSaveFile = () => {
+  const handleSaveFile = async () => {
     try {
       const blob = new Blob([text], { type: "text/markdown" });
       const url = URL.createObjectURL(blob);
@@ -51,10 +40,74 @@ This is a **live preview** of your Markdown.
     }
   };
 
+  const handleFetchExample = async () => {
+    try {
+      setSaveFile("Processing...");
+      const options = {
+        method: 'POST',
+        url: 'https://api.oluwasetemi.dev/tasks',
+        headers: { 'Content-Type': 'application/json' },
+        data: {
+          name: text,
+          description: null,
+          start: null,
+          end: null,
+          duration: null,
+          priority: 'LOW',
+          status: 'TODO',
+          archived: true,
+          isDefault: null,
+          parentId: null,
+          children: '',
+          owner: null,
+          tags: null,
+          completedAt: null
+        }
+      };
+      const response = await axios.post(options.url, JSON.stringify(options.data), { headers: options.headers });
+      //console.log("response>>", { response, taskid: response?.data?.id });
+
+      if (response) {
+        setText(response.name);
+        sessionStorage.setItem('taskId', response?.data?.id);
+        await handleSaveFile();
+        setSaveFile("Save File");
+        toast.success("Successfully saved markdown to API");
+        setTimeout(() => window.location.reload(), 3000);
+      }
+    } catch (error) {
+      toast.error("Failed to fetch example Markdown");
+      console.error("Error fetching example Markdown:", error);
+    }
+  }
+
+  async function handleFetchData() {
+    try {
+      setText("")
+      const getTaskId = sessionStorage.getItem('taskId') ?? "";
+      if (getTaskId) {
+        const response = await axios.get(`https://api.oluwasetemi.dev/tasks/${getTaskId}`);
+        console.log("fetch task from API response>>",response);
+        if (response) {
+          setText(response?.data?.name);
+          toast.success("Fetched markdown from previous session");
+        }
+      }
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error("Failed to fetch previous markdown");
+    }
+  }
+
+  useEffect(() => {
+    handleFetchData();
+  }, [])
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-        
+
         {/* Editor Section */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 flex flex-col">
           <div className="flex items-center justify-between mb-3">
@@ -63,24 +116,12 @@ This is a **live preview** of your Markdown.
             </h2>
             <div className="flex gap-2">
               <button
-                onClick={() => fileInputRef.current.click()}
-                className="px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700"
-              >
-                Load File
-              </button>
-              <button
-                onClick={handleSaveFile}
+                onClick={handleFetchExample}
                 className="px-3 py-1 bg-green-600 text-white rounded-md text-sm hover:bg-green-700"
               >
-                Save File
+                {saveFile}
               </button>
-              <input
-                type="file"
-                accept=".md"
-                ref={fileInputRef}
-                className="hidden"
-                onChange={handleFileUpload}
-              />
+    
             </div>
           </div>
 

@@ -10,6 +10,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@uiw/react-codemirror": "^4.25.2",
+    "axios": "^1.12.2",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.4.11",
     "react": "^19.2.0",
